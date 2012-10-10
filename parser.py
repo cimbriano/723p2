@@ -39,6 +39,10 @@ class Chart:
         bestItem = None
         bestLogProb = float('-inf')
         for item in self.iter_cell(i, j):
+            print "cell: " + str(i) + " ," + str(j) + " has items"
+            print "item is :"
+            print item
+            print
             if desiredLabel is not None and desiredLabel != item.label: continue
             if item.logProb > bestLogProb:
                 bestItem    = item
@@ -143,26 +147,40 @@ def cky(pcfg, sent, pruningPercent=None):
 
             # try unary rules
             ### TODO: YOUR CODE HERE
-            while True:
-                toAdd = []
-                for production in chart.iter_cell(i,k):
-                    for lhs,ruleProb in pcfg.iter_unary_rules_on_rhs(production.label):
-                        item = Item(i, k, production, production.logProb + log(ruleProb), production)
-                        toAdd.append(item)
+                while True:
+                    toAdd = []
+
+                    for production in chart.iter_cell(i,k):
+                        
+                        # print "production = "
+                        # print production.label
+                        # print 
+
+                        for lhs,ruleProb in pcfg.iter_unary_rules_on_rhs(production.label):
+                            item = Item(i, k, production.label, production.logProb + log(ruleProb), production)
+                            
+                            print 
+                            print "adding item"
+                            print item
+                            print
+
+                            toAdd.append(item)
 
 
-                anyAdded = False
-                for item in toAdd:
-                    if chart.add(item):
-                        anyAdded = True
+                    anyAdded = False
+                    for item in toAdd:
+                        if chart.add(item):
+                            anyAdded = True
 
-                if not anyAdded:
-                    break
+                    if not anyAdded:
+                        break
             
 
             # prune the cell
             chart.prune_cell(i, k)
     
+    print chart.chart
+
     return chart
 
 def parse(pcfg, sent, pruningPercent=None):
@@ -170,6 +188,7 @@ def parse(pcfg, sent, pruningPercent=None):
     chart = cky(pcfg, sent, pruningPercent)
     top = chart.best_in_cell(0, N, 'TOP')
     if top is None:
+        print "top is None"
         return None
     return top.get_tree()
 
