@@ -6,7 +6,7 @@ class Item:
     def __init__(self, i, j, label, logProb=0, backPtrLeft=None, backPtrRight=None):
         self.startPos = i
         self.endPos = j
-        self.label = label
+        self.label = str(label)
         self.logProb = logProb
         self.backPtrLeft = backPtrLeft
         self.backPtrRight = backPtrRight
@@ -146,24 +146,13 @@ def cky(pcfg, sent, pruningPercent=None):
                             chart.add(item)
 
             # try unary rules
-            ### TODO: YOUR CODE HERE
                 while True:
                     toAdd = []
 
                     for production in chart.iter_cell(i,k):
-                        
-                        # print "production = "
-                        # print production.label
-                        # print 
 
                         for lhs,ruleProb in pcfg.iter_unary_rules_on_rhs(production.label):
-                            item = Item(i, k, production.label, production.logProb + log(ruleProb), production)
-                            
-                            print 
-                            print "adding item"
-                            print item
-                            print
-
+                            item = Item(i, k, lhs, production.logProb + log(ruleProb), production)
                             toAdd.append(item)
 
 
