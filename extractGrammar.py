@@ -1,5 +1,6 @@
 from tree import *
 from util import *
+from grammar import *
 
 def binarizeTree(tree, horizSize=None, verticSize=1, runFancyCode=False):
     def binarizeTree_rec(t):

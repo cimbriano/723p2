@@ -3,6 +3,7 @@ from util import *
 from tree import *
 from grammar import *
 from sys import *
+from extractGrammar import *
 
 def main(args):
 
@@ -32,7 +33,31 @@ def partII():
 
 def partIII():
 	print "Part III: Parsing English"
-	print "Nothing done for this part yet"
+
+	filename = 'wsj.dev'
+	print "Data file: " + filename
+
+	pcfg = computePCFG(filename)
+	
+	print "PCFG length: " + str(len(pcfg))
+	print str(pcfg)
+
+	print
+	print
+
+	print "wsj.train"
+	pcfg = computePCFG('wsj.train')
+	print "length: " + str(len(pcfg))
+	print parse(pcfg, ['NN', 'VBZ', 'IN', 'DT', 'NN']) 
+	print parse(pcfg, ['VBZ', 'NN', 'IN', 'DT', 'NN'])
+
+	print
+	print nonBinaryTree
+	print binarizeTree(nonBinaryTree)
+	print debinarizeTree(binarizeTree(nonBinaryTree))
+
+	print evaluateParser(pcfg, 'wsj.dev')
+
 
 def all_parts():
 	partI()

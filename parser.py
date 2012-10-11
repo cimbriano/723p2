@@ -1,6 +1,7 @@
 from tree import *
 from util import *
 from math import *
+from extractGrammar import *
 
 class Item:
     def __init__(self, i, j, label, logProb=0, backPtrLeft=None, backPtrRight=None):
@@ -39,10 +40,6 @@ class Chart:
         bestItem = None
         bestLogProb = float('-inf')
         for item in self.iter_cell(i, j):
-            print "cell: " + str(i) + " ," + str(j) + " has items"
-            print "item is :"
-            print item
-            print
             if desiredLabel is not None and desiredLabel != item.label: continue
             if item.logProb > bestLogProb:
                 bestItem    = item
@@ -167,9 +164,6 @@ def cky(pcfg, sent, pruningPercent=None):
 
             # prune the cell
             chart.prune_cell(i, k)
-    
-    print chart.chart
-
     return chart
 
 def parse(pcfg, sent, pruningPercent=None):
