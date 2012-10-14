@@ -17,9 +17,7 @@ def binarizeTree(tree, horizSize=None, verticSize=1, runFancyCode=False):
 
 
         if verticSize > 1:   # your code for parent annotation!
-            ### TODO: YOUR CODE HERE
-
-            util.raiseNotDefined()
+            annotateChildren(t, verticSize)
 
         # if we're already binary or unary, life is good
         if len(t) <= 2:
@@ -91,20 +89,20 @@ def annotateChildren(tree, verticSize=None):
     else:
         parent_label = tree.node
 
-    print "Parent label: " + parent_label
+    # print "Parent label: " + parent_label
 
     def annotateChildren_rec(tree, annotation, endLevel):
-        print "End level: " + str(endLevel)
+        # print "End level: " + str(endLevel)
         if endLevel == 0: return
 
         #print "Printing Tree in recursive"
         #print tree 
 
-        for child in tree.subtrees():
-            child .node += "^" + annotation
+        for child in tree:
+            child.node += "^" + annotation
             annotateChildren_rec(child, annotation, endLevel - 1)
 
-    annotateChildren_rec(tree, parent_label, verticSize)
+    annotateChildren_rec(tree, parent_label, verticSize - 1)
     return tree
     
 

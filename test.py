@@ -54,15 +54,9 @@ def partIII():
 	print "Binarization with horizSize equals 2"
 	print binarizeTree(nonBinaryTree, horizSize=2)
 	
-	print "Debinarize Default Tree"
-	print debinarizeTree(binarizeTree(nonBinaryTree))
 
-
-	
-	tree = binarizeTree(nonBinaryTree)
-	annotated = annotateChildren(tree, 2)
-	print "Annotate Children Test"
-	print annotated
+	print "Annotate Children Test: vertical  = 2 (parent annotation only"
+	print binarizeTree(nonBinaryTree, verticSize=2)
 
 	#print evaluateParser(pcfg, 'wsj.dev')
 
