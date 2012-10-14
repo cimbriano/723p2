@@ -46,13 +46,40 @@ def binarizeTree(tree, horizSize=None, verticSize=1, runFancyCode=False):
 
         if horizSize is not None:   # None means "infinity" -- this is your code for horizontal markovization
             ### TODO: YOUR CODE HERE
-            util.raiseNotDefined()
+            myLabel = markovLabel(myLabel, horizSize=horizSize)
         
         # return the tree
         return Tree(myLabel, [newLeftChild, newRightChild])
 
     if tree is None: return None
     return binarizeTree_rec(tree)
+
+def markovLabel(label, horizSize=None, forgetFront=True):
+    # Given an internal node label and a horizSize this method returns the 
+    # markovized new label
+    
+    # Label should start with an underscore, otherwise markovization doesn't make sense
+    if not label.startswith("_") or horizSize == None: return label
+
+    # Split the label on the underscore
+    # Note: Since the first character of label is an underscore
+    # split will return the empty string as the first element
+    label_parts = label.split("_")[1:]
+
+    # If there are less constituents in this label than the horizSize,
+    # then we should'nt remove anything
+    if len(label_parts) < horizSize: return label
+
+    if forgetFront == True:
+        retString = "_" + "_".join(label_parts[-horizSize:])
+    else:
+        retString = "_" + "_".join(label_parts[:horizSize])
+    return retString
+
+
+
+
+    
 
 def debinarizeTree(tree):
     def debinarizeTree_rec(t):
