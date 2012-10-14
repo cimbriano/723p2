@@ -36,15 +36,9 @@ def partIII():
 
 	#filename = 'wsj.dev'
 	#print "Data file: " + filename
-
 	#pcfg = computePCFG(filename)
-	
 	#print "PCFG length: " + str(len(pcfg))
 	#print str(pcfg)
-
-	print
-	print
-
 	# print "wsj.train"
 	# pcfg = computePCFG('wsj.dev')
 	# print "length: " + str(len(pcfg))
