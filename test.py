@@ -34,29 +34,36 @@ def partII():
 def partIII():
 	print "Part III: Parsing English"
 
-	filename = 'wsj.dev'
-	print "Data file: " + filename
+	#filename = 'wsj.dev'
+	#print "Data file: " + filename
 
-	pcfg = computePCFG(filename)
+	#pcfg = computePCFG(filename)
 	
-	print "PCFG length: " + str(len(pcfg))
-	print str(pcfg)
+	#print "PCFG length: " + str(len(pcfg))
+	#print str(pcfg)
 
 	print
 	print
 
-	print "wsj.train"
-	pcfg = computePCFG('wsj.train')
-	print "length: " + str(len(pcfg))
-	print parse(pcfg, ['NN', 'VBZ', 'IN', 'DT', 'NN']) 
-	print parse(pcfg, ['VBZ', 'NN', 'IN', 'DT', 'NN'])
+	# print "wsj.train"
+	# pcfg = computePCFG('wsj.dev')
+	# print "length: " + str(len(pcfg))
+	# print parse(pcfg, ['NN', 'VBZ', 'IN', 'DT', 'NN']) 
+	# print parse(pcfg, ['VBZ', 'NN', 'IN', 'DT', 'NN'])
 
 	print
 	print nonBinaryTree
+
+	print "Default binarization"
 	print binarizeTree(nonBinaryTree)
+
+	print "Binarization with horizSize equals 2"
+	print binarizeTree(nonBinaryTree, horizSize=2)
+	
+	print "Debinarize Default Tree"
 	print debinarizeTree(binarizeTree(nonBinaryTree))
 
-	print evaluateParser(pcfg, 'wsj.dev')
+	#print evaluateParser(pcfg, 'wsj.dev')
 
 
 def all_parts():
