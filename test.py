@@ -57,6 +57,13 @@ def partIII():
 	print "Debinarize Default Tree"
 	print debinarizeTree(binarizeTree(nonBinaryTree))
 
+
+	
+	tree = binarizeTree(nonBinaryTree)
+	annotated = annotateChildren(tree, 2)
+	print "Annotate Children Test"
+	print annotated
+
 	#print evaluateParser(pcfg, 'wsj.dev')
 
 

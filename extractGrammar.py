@@ -18,6 +18,7 @@ def binarizeTree(tree, horizSize=None, verticSize=1, runFancyCode=False):
 
         if verticSize > 1:   # your code for parent annotation!
             ### TODO: YOUR CODE HERE
+
             util.raiseNotDefined()
 
         # if we're already binary or unary, life is good
@@ -45,7 +46,6 @@ def binarizeTree(tree, horizSize=None, verticSize=1, runFancyCode=False):
         newRightChild = binarizeTree_rec(t[-1])     # last child
 
         if horizSize is not None:   # None means "infinity" -- this is your code for horizontal markovization
-            ### TODO: YOUR CODE HERE
             myLabel = markovLabel(myLabel, horizSize=horizSize)
         
         # return the tree
@@ -76,9 +76,36 @@ def markovLabel(label, horizSize=None, forgetFront=True):
         retString = "_" + "_".join(label_parts[:horizSize])
     return retString
 
+def annotateChildren(tree, verticSize=None):
+    # For each child layer dictated by verticSize, add to that child's label
+    # "^" + <parent_label> where <parent_label> is the label of the parent 
+    # up to, but not inlcuding, the first ^
 
+    # verticSize = 1 means no parent annotation, anything < 1 doesn't make sense
+    if verticSize < 2: return tree
 
+    #parent_label UPTO BUT NOT INCLUDING ^ or anything after it
 
+    if "^" in tree.node:
+        parent_label = tree.node[:tree.node.index("^")]
+    else:
+        parent_label = tree.node
+
+    print "Parent label: " + parent_label
+
+    def annotateChildren_rec(tree, annotation, endLevel):
+        print "End level: " + str(endLevel)
+        if endLevel == 0: return
+
+        #print "Printing Tree in recursive"
+        #print tree 
+
+        for child in tree.subtrees():
+            child .node += "^" + annotation
+            annotateChildren_rec(child, annotation, endLevel - 1)
+
+    annotateChildren_rec(tree, parent_label, verticSize)
+    return tree
     
 
 def debinarizeTree(tree):
