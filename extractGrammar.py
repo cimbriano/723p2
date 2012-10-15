@@ -80,7 +80,7 @@ def annotateChildren(tree, verticSize=None):
     # up to, but not inlcuding, the first ^
 
     # verticSize = 1 means no parent annotation, anything < 1 doesn't make sense
-    if verticSize < 2: return tree
+    if verticSize < 2 or tree.node.startswith("_"): return tree
 
     #parent_label UPTO BUT NOT INCLUDING ^ or anything after it
 

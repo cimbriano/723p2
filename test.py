@@ -9,11 +9,13 @@ def main(args):
 
 	which_part = args[1] if len(args) == 2 else None
 
-	if which_part == "1":  		partI()
-	elif which_part == "2": 	partII()
-	elif which_part == "3": 	partIII()
-	elif which_part == "all":	all_parts()
-	else: 						usage()
+	if which_part == "1":  			partI()
+	elif which_part == "2": 		partII()
+	elif which_part == "3": 		partIII()
+	elif which_part == "all":		all_parts()
+	elif which_part == "train":		train()
+	elif which_part == "test":		test()
+	else: 							usage()
 		
 
 def partI():
@@ -50,16 +52,33 @@ def partIII():
 
 	print "Default binarization"
 	print binarizeTree(nonBinaryTree)
-
-	print "Binarization with horizSize equals 2"
-	print binarizeTree(nonBinaryTree, horizSize=2)
+#
+#	print "Binarization with horizSize equals 2"
+#	print binarizeTree(nonBinaryTree, horizSize=2)
+#	
+#
+#	print "Annotate Children Test: vertical  = 2 (parent annotation only"
+#	print binarizeTree(nonBinaryTree, verticSize=2)
 	
-
-	print "Annotate Children Test: vertical  = 2 (parent annotation only"
-	print binarizeTree(nonBinaryTree, verticSize=2)
+	
+	print "Both horiz and vertical = 2"
+	print binarizeTree(nonBinaryTree, verticSize=2, horizSize=2)
 
 	#print evaluateParser(pcfg, 'wsj.dev')
 
+def train():
+	print "training on wsj.train"
+	print "Computing PCFG"
+	pcfg = computePCFG('wsj.train')
+	
+	print "Evaluating Parser with pruning percent 0.1"
+	print evaluateParser(pcfg, 'wsj.dev', pruningPercent=0.1)
+	
+def test():
+	print "Computing PCFG"
+	pcfg = computePCFG('wsj.train', verticSize=2, horizSize=2)
+	print "Running parser on test"
+	runParserOnTest(pcfg, 'wsj.test', 'wsj.test.out', pruningPercent=0.001)
 
 def all_parts():
 	partI()
