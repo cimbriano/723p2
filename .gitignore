@@ -1,9 +1,14 @@
 #OSX
 .DS_Store
+
 # Python 
 *.pyc
 *.swp
 .tmp*
 .timestamp
+.project
+.pydevproject
+
 ##
 *.predictions
+
