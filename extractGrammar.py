@@ -89,21 +89,15 @@ def annotateChildren(tree, verticSize=None):
     else:
         parent_label = tree.node
 
-    # print "Parent label: " + parent_label
-
     def annotateChildren_rec(tree, annotation, endLevel):
         # print "End level: " + str(endLevel)
         if endLevel == 0: return
-
-        #print "Printing Tree in recursive"
-        #print tree 
 
         for child in tree:
             child.node += "^" + annotation
             annotateChildren_rec(child, annotation, endLevel - 1)
 
     annotateChildren_rec(tree, parent_label, verticSize - 1)
-    return tree
     
 
 def debinarizeTree(tree):
