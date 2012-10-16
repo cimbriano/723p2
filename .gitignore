@@ -12,3 +12,5 @@
 ##
 *.predictions
 
+# output files
+*.out
