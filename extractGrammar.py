@@ -101,14 +101,23 @@ def annotateChildren(tree, verticSize=None):
     
 
 def debinarizeTree(tree):
+    def removeAnnotations(s):
+        if type(s) is not str: return s
+        j = s.find('^')
+        if j == -1:
+            return s
+        return s[0:j]
+    
     def debinarizeTree_rec(t):
         # just return pre-terminals
-        if type(t) is str: return t
-        if t.height() <= 2: return t
+        if type(t) is str:  return removeAnnotations(t)
+        if t.height() <= 2:
+            t.node = removeAnnotations(t.node)
+            return t
 
         # if this is a unary node, life is good
         if len(t) == 1:
-            return Tree(t.node, [debinarizeTree_rec(t[0])])
+            return Tree(removeAnnotations(t.node), [debinarizeTree_rec(t[0])])
 
         # this might have been the result of binarization.  for BOTH children,
         # if their node name STARTS WITH "_" then they are binarized
@@ -134,7 +143,7 @@ def debinarizeTree(tree):
         for i in range(len(children)):
             children[i] = debinarizeTree_rec(children[i])
 
-        return Tree(t.node, children)
+        return Tree(removeAnnotations(t.node), children)
 
     if tree is None: return None
     return debinarizeTree_rec(tree)
