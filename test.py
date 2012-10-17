@@ -4,6 +4,7 @@ from tree import *
 from grammar import *
 from sys import *
 from extractGrammar import *
+import thread
 
 def main(args):
 
@@ -55,7 +56,7 @@ def partIII():
 	#print binarizeTree(nonBinaryTree)
 
 	print "annotation"
-	tree = binarizeTree(nonBinaryTree, verticSize=3)
+	tree = binarizeTree(nonBinaryTree, verticSize=4)
 	print tree
 	print 
 #
@@ -75,10 +76,10 @@ def partIII():
 def train():
 	print "training on wsj.train"
 	print "Computing PCFG"
-	pcfg = computePCFG('wsj.train')
+	pcfg = computePCFG('wsj.train', horizSize=2, verticSize=3)
 	
 	print "Evaluating Parser with pruning percent 0.001"
-	print evaluateParser(pcfg, 'wsj.dev', pruningPercent=0.00001)
+	print evaluateParser(pcfg, 'wsj.dev', pruningPercent=0.001)
 	
 def test():
 	print "Computing PCFG"
@@ -88,17 +89,23 @@ def test():
 
 def experiment():
 
-	max_score = 0
-	best_hsize = 0
-	best_vsize = 0
-	prune = 0.1
+	# max_score = 0
+	# best_hsize = 0
+	# best_vsize = 0
+	prune = 0.00001
+	h_range = range(1,5)
+	v_range = range(1,5)
 
-	out = open("experiment.out", 'w')
+	out_filename = "experiment.out.h" + str(h_range[0]) + "-" + str(h_range[-1]) \
+	+ ".v" + str(v_range[0]) + "-" + str(v_range[-1]) + ".p" + str(prune) + ".txt"
+
+	out = open("experiment/" + out_filename, 'w')
 	out.write("h\t\tv\t\tprune\t\tscore\n")
 
-	for hsize in range(1,5):
-		for vsize in range(1,5):
+	for hsize in h_range:
+		for vsize in v_range:
 			print "Running: hsize = " + str(hsize) + ", vsize = " + str(vsize)
+
 			pcfg = computePCFG('wsj.train', horizSize=hsize, verticSize=vsize)
 			score = evaluateParser(pcfg, 'wsj.dev', pruningPercent=prune)
 

@@ -171,7 +171,7 @@ def parse(pcfg, sent, pruningPercent=None):
     chart = cky(pcfg, sent, pruningPercent)
     top = chart.best_in_cell(0, N, 'TOP')
     if top is None:
-        print "top is None"
+#        print "top is None"
         return None
     return top.get_tree()
 

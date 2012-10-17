@@ -96,9 +96,8 @@ def annotateChildren(tree, verticSize=None):
         if endLevel == 0: return
 
         for child in tree:
-            child.node += "^" + annotation
-
             if child.node not in tree.preterminals():
+                child.node += "^" + annotation
                 annotateChildren_rec(child, annotation, endLevel - 1)
 
     annotateChildren_rec(tree, parent_label, verticSize - 1)
