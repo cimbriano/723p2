@@ -89,7 +89,7 @@ def annotateChildren(tree, verticSize=None):
     else:
         parent_label = tree.node
 
-    print parent_label
+#    print parent_label
 
     def annotateChildren_rec(tree, annotation, endLevel):
         # print "End level: " + str(endLevel)
