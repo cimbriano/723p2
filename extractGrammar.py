@@ -80,7 +80,7 @@ def annotateChildren(tree, verticSize=None):
     # up to, but not inlcuding, the first ^
 
     # verticSize = 1 means no parent annotation, anything < 1 doesn't make sense
-    if verticSize < 2 or tree.node.startswith("_"): return tree
+    if verticSize < 2 or tree.node.startswith("_"): return
 
     #parent_label UPTO BUT NOT INCLUDING ^ or anything after it
 
@@ -89,13 +89,17 @@ def annotateChildren(tree, verticSize=None):
     else:
         parent_label = tree.node
 
+    print parent_label
+
     def annotateChildren_rec(tree, annotation, endLevel):
         # print "End level: " + str(endLevel)
         if endLevel == 0: return
 
         for child in tree:
             child.node += "^" + annotation
-            annotateChildren_rec(child, annotation, endLevel - 1)
+
+            if child.node not in tree.preterminals():
+                annotateChildren_rec(child, annotation, endLevel - 1)
 
     annotateChildren_rec(tree, parent_label, verticSize - 1)
     
