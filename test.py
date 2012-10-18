@@ -93,8 +93,8 @@ def experiment():
 	# best_hsize = 0
 	# best_vsize = 0
 	prune = 0.00001
-	h_range = range(1,5)
-	v_range = range(1,5)
+	h_range = range(1,3)
+	v_range = range(2,4)
 
 	out_filename = "experiment.out.h" + str(h_range[0]) + "-" + str(h_range[-1]) \
 	+ ".v" + str(v_range[0]) + "-" + str(v_range[-1]) + ".p" + str(prune) + ".txt"
